@@ -232,6 +232,7 @@ const en = {
   speedtestModeTip:
     'Dashboard controlled keeps Selector, LoadBalance, and Smart groups on the dashboard-driven per-node test flow and shows per-node progress. Core controlled calls the core group latency API and lets the core test the whole group at once.',
   connectionStyle: 'Connection style',
+  closedConnectionsLimit: 'Closed connections limit',
   logStyle: 'Log style',
   ruleStyle: 'Rule style',
   card: 'Card',

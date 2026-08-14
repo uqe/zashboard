@@ -182,6 +182,10 @@ export const SETTINGS_CATEGORIES: SettingsCategory[] = [
         label: 'connectionStyle',
       },
       {
+        key: `${SETTINGS_MENU_KEY.connections}.closedConnectionsLimit`,
+        label: 'closedConnectionsLimit',
+      },
+      {
         key: `${SETTINGS_MENU_KEY.connections}.proxyChainDirection`,
         label: 'proxyChainDirection',
       },

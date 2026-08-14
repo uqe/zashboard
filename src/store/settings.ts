@@ -342,6 +342,27 @@ export const proxyChainDirection = useStorage(
 export const showFullProxyChain = useStorage('config/show-full-proxy-chain', true)
 export const tableSize = useStorage<TABLE_SIZE>('config/connection-table-size', TABLE_SIZE.LARGE)
 export const tableWidthMode = useStorage('config/table-width-mode', TABLE_WIDTH_MODE.AUTO)
+const DEFAULT_CLOSED_CONNECTIONS_LIMIT = 500
+const storedClosedConnectionsLimit = useStorage<number>(
+  'config/closed-connections-limit',
+  DEFAULT_CLOSED_CONNECTIONS_LIMIT,
+)
+const normalizeClosedConnectionsLimit = (value: unknown) => {
+  const limit = Math.floor(Number(value))
+
+  return Number.isFinite(limit) && limit > 0 ? limit : DEFAULT_CLOSED_CONNECTIONS_LIMIT
+}
+
+storedClosedConnectionsLimit.value = normalizeClosedConnectionsLimit(
+  storedClosedConnectionsLimit.value,
+)
+
+export const closedConnectionsLimit = computed({
+  get: () => storedClosedConnectionsLimit.value,
+  set: (value: number) => {
+    storedClosedConnectionsLimit.value = normalizeClosedConnectionsLimit(value)
+  },
+})
 export const connectionTableColumns = useStorage<CONNECTIONS_TABLE_ACCESSOR_KEY[]>(
   'config/connection-table-columns',
   [

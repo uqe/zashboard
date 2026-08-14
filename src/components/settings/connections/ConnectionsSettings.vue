@@ -24,6 +24,18 @@
           </option>
         </select>
       </SettingItem>
+      <SettingItem :setting-key="k.closedConnectionsLimit">
+        <div class="setting-item-label">
+          {{ $t('closedConnectionsLimit') }}
+        </div>
+        <input
+          type="number"
+          class="input input-sm w-24"
+          min="1"
+          step="100"
+          v-model.number.lazy="closedConnectionsLimit"
+        />
+      </SettingItem>
       <SettingItem :setting-key="k.proxyChainDirection">
         <div class="setting-item-label">
           {{ $t('proxyChainDirection') }}
@@ -99,6 +111,7 @@ import {
   TABLE_WIDTH_MODE,
 } from '@/constant'
 import {
+  closedConnectionsLimit,
   connectionDisplayStyle,
   isConnectionCard,
   proxyChainDirection,

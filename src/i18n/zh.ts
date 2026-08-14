@@ -233,6 +233,7 @@ const zh: LANG_MESSAGE = {
   speedtestModeTip:
     '面板控制会让 Selector、LoadBalance、Smart 组沿用面板逐个测试节点的逻辑，并展示每个节点的测试进度。核心控制会调用核心的组测速接口，由核心一次性完成整组测速。',
   connectionStyle: '连接样式',
+  closedConnectionsLimit: '已关闭连接数量上限',
   logStyle: '日志样式',
   ruleStyle: '规则样式',
   card: '卡片',

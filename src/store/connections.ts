@@ -25,6 +25,7 @@ import { initAggregatedDataMap, saveConnectionHistory } from './connHistory'
 import {
   autoDisconnectIdleUDP,
   autoDisconnectIdleUDPTime,
+  closedConnectionsLimit,
   connectionCardLines,
   connectionTableColumns,
   isConnectionCard,
@@ -84,7 +85,9 @@ export const initConnections = () => {
     activeConnections.value = snapshot.active
 
     if (snapshot.closed.length > 0) {
-      closedConnections.value = closedConnections.value.concat(snapshot.closed).slice(-500)
+      closedConnections.value = closedConnections.value
+        .concat(snapshot.closed)
+        .slice(-closedConnectionsLimit.value)
       saveConnectionHistory(snapshot.closed)
     }
   })
@@ -109,6 +112,10 @@ export const initConnections = () => {
     ws.close()
   }
 }
+
+watch(closedConnectionsLimit, (limit) => {
+  closedConnections.value = closedConnections.value.slice(-limit)
+})
 
 export const stopConnections = () => {
   cancel?.()
