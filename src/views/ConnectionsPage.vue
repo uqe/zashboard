@@ -21,6 +21,29 @@ import ConnectionTable from '@/components/connections/ConnectionTable.vue'
 import ConnectionCtrl from '@/components/controls/ConnectionCtrl.tsx'
 import { usePaddingForViews } from '@/composables/paddingViews'
 import { isConnectionCard } from '@/store/settings'
+import { showConnectionTimestamp } from '@/store/connections'
+import { useHotkeys } from '@tanstack/vue-hotkeys'
+
+const toggleConnectionTimeFormat = () => {
+  showConnectionTimestamp.value = !showConnectionTimestamp.value
+}
+
+useHotkeys(
+  [
+    { hotkey: { key: 'R' }, callback: toggleConnectionTimeFormat },
+    { hotkey: { key: 'R', shift: true }, callback: toggleConnectionTimeFormat },
+    { hotkey: { key: 'К' }, callback: toggleConnectionTimeFormat },
+    { hotkey: { key: 'К', shift: true }, callback: toggleConnectionTimeFormat },
+  ],
+  {
+    requireReset: true,
+    meta: {
+      name: 'Toggle connection time format',
+      description: 'Switch Connect Time between relative time and timestamp',
+    },
+  },
+)
+
 const { padding } = usePaddingForViews({
   offsetTop: 0,
   offsetBottom: 0,

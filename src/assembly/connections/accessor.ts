@@ -8,12 +8,14 @@ import { CONNECTIONS_TABLE_ACCESSOR_KEY, PROXY_CHAIN_DIRECTION } from '@/constan
 import { getIPLabelFromMap } from '@/helper/sourceip'
 import { fromNow, prettyBytesHelper } from '@/helper/utils'
 import type { Connection } from '@/types'
+import dayjs from 'dayjs'
 import * as ipaddr from 'ipaddr.js'
 
 export type ConnectionDisplayOptions = {
   mode: 'card' | 'table'
   proxyChainDirection: PROXY_CHAIN_DIRECTION | string
   showFullProxyChain: boolean
+  connectTimeFormat?: 'relative' | 'timestamp'
 }
 
 // 各后端连接流统一产出的快照。active/closed 的归类与瞬时速率均由各后端 assembly 内部算好,
@@ -113,7 +115,9 @@ export const createGetConnectionDisplayValue =
       case CONNECTIONS_TABLE_ACCESSOR_KEY.Upload:
         return prettyBytesHelper(accessor.upload(connection))
       case CONNECTIONS_TABLE_ACCESSOR_KEY.ConnectTime:
-        return fromNow(accessor.start(connection))
+        return options.connectTimeFormat === 'timestamp'
+          ? dayjs(accessor.start(connection)).format('HH:mm:ss')
+          : fromNow(accessor.start(connection))
       case CONNECTIONS_TABLE_ACCESSOR_KEY.SourceIP:
         return getIPLabelFromMap(accessor.sourceIP(connection))
       case CONNECTIONS_TABLE_ACCESSOR_KEY.SourcePort:

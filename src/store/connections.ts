@@ -47,6 +47,7 @@ export const quickFilterRegex = useStorage<string>('config/quick-filter-regex', 
 export const quickFilterEnabled = useStorage<boolean>('config/quick-filter-enabled', false)
 export const connectionFilter = ref('')
 export const sourceIPFilter = ref<string[] | null>(null)
+export const showConnectionTimestamp = ref(false)
 
 // 每拍整体换引用、元素不可变的管道:深 ref 会为每拍数千个一次性对象建 Proxy 与依赖记录,
 // shallowRef 才是与该数据流语义吻合的粒度。
@@ -179,6 +180,9 @@ const filterConnections = (items: readonly Connection[]) => {
     mode: isConnectionCard.value ? ('card' as const) : ('table' as const),
     proxyChainDirection: proxyChainDirection.value,
     showFullProxyChain: showFullProxyChain.value,
+    connectTimeFormat: showConnectionTimestamp.value
+      ? ('timestamp' as const)
+      : ('relative' as const),
   }
   const visibleKeys = isConnectionCard.value
     ? connectionCardLines.value.flat()

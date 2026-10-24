@@ -153,6 +153,7 @@ import { useConnections } from '@/composables/connections'
 import { CONNECTIONS_TABLE_ACCESSOR_KEY } from '@/constant'
 import { getConnectionChains, getConnectionSourceIP, getDestinationFromConnection } from '@/helper'
 import { PROXIES_PARENT_CLASS } from '@/helper/utils'
+import { showConnectionTimestamp } from '@/store/connections'
 import { proxyChainDirection, showFullProxyChain } from '@/store/settings'
 import {
   ArrowRightCircleIcon,
@@ -247,6 +248,9 @@ const sections = computed(() => {
     mode: 'table' as const,
     proxyChainDirection: proxyChainDirection.value,
     showFullProxyChain: showFullProxyChain.value,
+    connectTimeFormat: showConnectionTimestamp.value
+      ? ('timestamp' as const)
+      : ('relative' as const),
   }
   const rowsOf = (keys: CONNECTIONS_TABLE_ACCESSOR_KEY[]) =>
     keys

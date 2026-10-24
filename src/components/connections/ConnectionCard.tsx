@@ -11,7 +11,12 @@ import {
   PROXY_CHAIN_DIRECTION,
 } from '@/constant'
 import { getConnectionChains, getConnectionSmartBlock } from '@/helper'
-import { connectionFilter, connectionTabShow, isClosedConnection } from '@/store/connections'
+import {
+  connectionFilter,
+  connectionTabShow,
+  isClosedConnection,
+  showConnectionTimestamp,
+} from '@/store/connections'
 import { connectionCardLines, proxyChainDirection, showFullProxyChain } from '@/store/settings'
 import type { Connection } from '@/types'
 import {
@@ -48,6 +53,9 @@ export default defineComponent<{
         mode: 'card' as const,
         proxyChainDirection: proxyChainDirection.value,
         showFullProxyChain: showFullProxyChain.value,
+        connectTimeFormat: showConnectionTimestamp.value
+          ? ('timestamp' as const)
+          : ('relative' as const),
       }
       const highlightedText = (key: CONNECTIONS_TABLE_ACCESSOR_KEY) => (
         <HighlightText

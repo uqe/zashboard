@@ -232,6 +232,7 @@ import {
   connectionTabShow,
   isClosedConnection,
   renderConnections,
+  showConnectionTimestamp,
 } from '@/store/connections'
 import {
   connectionTableColumns,
@@ -304,6 +305,7 @@ const getTableDisplayValue = (connection: Connection, key: CONNECTIONS_TABLE_ACC
     mode: 'table',
     proxyChainDirection: proxyChainDirection.value,
     showFullProxyChain: showFullProxyChain.value,
+    connectTimeFormat: showConnectionTimestamp.value ? 'timestamp' : 'relative',
   })
 }
 
