@@ -15,14 +15,17 @@
 </template>
 
 <script setup lang="ts">
+import { setConnectionGeoIPEnabled } from '@/api/connection-geoip'
 import ConnectionCardList from '@/components/connections/ConnectionCardList.vue'
 import ConnectionDetails from '@/components/connections/ConnectionDetails.vue'
 import ConnectionTable from '@/components/connections/ConnectionTable.vue'
 import ConnectionCtrl from '@/components/controls/ConnectionCtrl.tsx'
-import { usePaddingForViews } from '@/composables/paddingViews'
-import { isConnectionCard } from '@/store/settings'
-import { showConnectionTimestamp } from '@/store/connections'
+import { usePaddingForViews } from '@/composables/use-padding-for-views'
+import { CONNECTIONS_TABLE_ACCESSOR_KEY } from '@/constant'
+import { connectionCardGroupKey, showConnectionTimestamp } from '@/store/connections'
+import { connectionCardLines, connectionTableColumns, isConnectionCard } from '@/store/settings'
 import { useHotkeys } from '@tanstack/vue-hotkeys'
+import { computed, onScopeDispose, watch } from 'vue'
 
 const toggleConnectionTimeFormat = () => {
   showConnectionTimestamp.value = !showConnectionTimestamp.value
@@ -48,6 +51,16 @@ const { padding } = usePaddingForViews({
   offsetTop: 0,
   offsetBottom: 0,
 })
+
+const isGeoIPVisible = computed(() =>
+  isConnectionCard.value
+    ? connectionCardGroupKey.value === CONNECTIONS_TABLE_ACCESSOR_KEY.GeoIP ||
+      connectionCardLines.value.some((line) => line.includes(CONNECTIONS_TABLE_ACCESSOR_KEY.GeoIP))
+    : connectionTableColumns.value.includes(CONNECTIONS_TABLE_ACCESSOR_KEY.GeoIP),
+)
+
+watch(isGeoIPVisible, setConnectionGeoIPEnabled, { immediate: true })
+onScopeDispose(() => setConnectionGeoIPEnabled(false))
 </script>
 
 <style>

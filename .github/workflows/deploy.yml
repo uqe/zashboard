@@ -9,7 +9,7 @@ on:
       release_tag:
         description: Release tag for the selected branch
         required: true
-        default: v3.19.0
+        default: v3.29.1
         type: string
       publish_image:
         description: Publish the Docker image
